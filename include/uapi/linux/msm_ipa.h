@@ -70,6 +70,8 @@
 #define IPA_IOCTL_ADD_RT_RULE_AFTER 45
 #define IPA_IOCTL_ADD_FLT_RULE_AFTER 46
 #define IPA_IOCTL_MAX 47
+#define IPA_IOCTL_CLEANUP 56
+#define IPA_IOCTL_QUERY_WLAN_CLIENT             57
 
 /**
  * max size of the header to be inserted
@@ -121,6 +123,8 @@
 #define IPA_FLT_MAC_SRC_ADDR_802_3	(1ul << 19)
 #define IPA_FLT_MAC_DST_ADDR_802_3	(1ul << 20)
 #define IPA_FLT_MAC_ETHER_TYPE		(1ul << 21)
+#define IPA_FLT_TCP_SYN			(1ul << 23)
+#define IPA_FLT_TCP_SYN_L2TP		(1ul << 24)
 
 /**
  * maximal number of NAT PDNs in the PDN config table
@@ -681,6 +685,9 @@ struct ipa_rt_rule {
 	uint32_t hdr_hdl;
 	uint32_t hdr_proc_ctx_hdl;
 	struct ipa_rule_attrib attrib;
+	uint8_t max_prio;
+	uint8_t hashable;
+	uint8_t retain_hdr;
 };
 
 /**
@@ -1582,6 +1589,12 @@ enum ipacm_client_enum {
 #define IPA_IOC_GET_HW_VERSION _IOWR(IPA_IOC_MAGIC, \
 				IPA_IOCTL_GET_HW_VERSION, \
 				enum ipa_hw_type *)
+
+#define IPA_IOC_CLEANUP _IO(IPA_IOC_MAGIC,\
+					IPA_IOCTL_CLEANUP)
+
+#define IPA_IOC_QUERY_WLAN_CLIENT _IO(IPA_IOC_MAGIC,\
+					IPA_IOCTL_QUERY_WLAN_CLIENT)
 
 /*
  * unique magic number of the Tethering bridge ioctls

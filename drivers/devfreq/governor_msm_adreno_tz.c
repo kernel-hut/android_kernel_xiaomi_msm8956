@@ -66,10 +66,6 @@ static DEFINE_SPINLOCK(tz_lock);
 static unsigned int adrenoboost = 0;
 #endif
 
-static u64 suspend_time;
-static u64 suspend_start;
-static unsigned long acc_total, acc_relative_busy;
-
 struct msm_adreno_extended_profile *partner_gpu_profile;
 static void do_partner_start_event(struct work_struct *work);
 static void do_partner_stop_event(struct work_struct *work);
